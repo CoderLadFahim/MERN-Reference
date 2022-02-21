@@ -2,8 +2,12 @@ const express = require('express');
 const dotenv = require('dotenv').config();
 
 const { handleErrors } = require('./middleware/errorMiddleware.js');
+const { connectDB } = require('./config/db.js');
 
 const portToListenOn = process.env.PORT || 5000;
+
+// calling the connectDB function for connecting to mongodb database
+connectDB();
 
 const app = express();
 

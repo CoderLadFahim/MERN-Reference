@@ -1,4 +1,5 @@
 const asyncHandler = require('express-async-handler');
+const Post = require('../models/postsModel.js');
 
 let posts = [
 	{
