@@ -14,7 +14,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/api/posts', require('./routes/inventionRoutes'));
+app.use('/api/posts', require('./routes/postsRoutes'));
 
 app.use(handleErrors);
 
