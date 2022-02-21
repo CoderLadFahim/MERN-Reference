@@ -1,3 +1,5 @@
+const asyncHandler = require('express-async-handler');
+
 let posts = [
 	{
 		title: 'Learning the backend with the MERN stack',
@@ -13,11 +15,11 @@ let posts = [
 	},
 ];
 
-const getPosts = (req, res) => {
+const getPosts = asyncHandler(async (req, res) => {
 	res.status(200).json(posts);
-};
+});
 
-const setPosts = (req, res) => {
+const setPosts = asyncHandler(async (req, res) => {
 	const { body } = req;
 
 	if (!body.title) {
@@ -26,17 +28,17 @@ const setPosts = (req, res) => {
 	}
 
 	res.status(200).json({ message: 'Setting posts' });
-};
+});
 
-const updatePosts = (req, res) => {
+const updatePosts = asyncHandler(async (req, res) => {
 	const { id } = req.params;
 	res.status(200).send({ message: `Updating post with the id of ${id}` });
-};
+});
 
-const deletePosts = (req, res) => {
+const deletePosts = asyncHandler(async (req, res) => {
 	const { id } = req.params;
 	res.status(200).send({ message: `Deleting post with the id of ${id}` });
-};
+});
 
 module.exports = {
 	getPosts,
