@@ -1,39 +1,43 @@
 const asyncHandler = require('express-async-handler');
-const Post = require('../models/postsModel.js');
-
-let posts = [
-	{
-		title: 'Learning the backend with the MERN stack',
-		author: 'CoderLadFahim',
-		id: 1,
-		body: "I can't believe I'm finally doing this, and blah blah blah",
-	},
-	{
-		title: 'Should I learn Django instead?',
-		author: 'CoderLadFahim',
-		id: 2,
-		body: "I learnt python with great amibition, and it would be shame if I don't do anything with it",
-	},
-];
+const Post = require('../models/postsModel');
 
 const getPosts = asyncHandler(async (req, res) => {
+	const posts = await Post.find();
 	res.status(200).json(posts);
 });
 
 const setPosts = asyncHandler(async (req, res) => {
-	const { body } = req;
+	const { body: reqBody } = req;
 
-	if (!body.title) {
+	if (!reqBody.title) {
 		res.status(400);
 		throw new Error('A title field is required in the data');
 	}
 
-	res.status(200).json({ message: 'Setting posts' });
+	const { title, author, body } = reqBody;
+
+	const post = await Post.create({
+		title,
+		author,
+		body,
+	});
+
+	res.status(200).json(post);
 });
 
 const updatePosts = asyncHandler(async (req, res) => {
 	const { id } = req.params;
-	res.status(200).send({ message: `Updating post with the id of ${id}` });
+
+	const postToUpdate = await Post.findById(id);
+
+	if (!postToUpdate) {
+		res.status(400);
+		throw new Error('Post not found');
+	}
+
+	const updatedPost = Post.findByIdAndUpdate(id, req.body, { new: true });
+
+	res.status(200).json(updatedPost);
 });
 
 const deletePosts = asyncHandler(async (req, res) => {

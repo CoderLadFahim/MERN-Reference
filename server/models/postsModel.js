@@ -10,10 +10,6 @@ const postsSchema = mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		id: {
-			type: Number,
-			required: true,
-		},
 		body: {
 			type: String,
 			required: true,
