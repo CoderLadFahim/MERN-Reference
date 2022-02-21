@@ -27,7 +27,6 @@ const setPosts = asyncHandler(async (req, res) => {
 
 const updatePosts = asyncHandler(async (req, res) => {
 	const { id } = req.params;
-
 	const postToUpdate = await Post.findById(id);
 
 	if (!postToUpdate) {
@@ -35,14 +34,25 @@ const updatePosts = asyncHandler(async (req, res) => {
 		throw new Error('Post not found');
 	}
 
-	const updatedPost = Post.findByIdAndUpdate(id, req.body, { new: true });
+	const updatedPost = await Post.findByIdAndUpdate(id, req.body, {
+		new: true,
+	});
 
 	res.status(200).json(updatedPost);
 });
 
 const deletePosts = asyncHandler(async (req, res) => {
 	const { id } = req.params;
-	res.status(200).send({ message: `Deleting post with the id of ${id}` });
+	const postToDelete = Post.findById(id);
+
+	if (!postToDelete) {
+		res.status(400);
+		throw new Error('Post non-existent');
+	}
+
+	await postToDelete.remove();
+
+	res.status(200).send({ id });
 });
 
 module.exports = {
