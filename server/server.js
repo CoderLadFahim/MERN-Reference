@@ -15,6 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/posts', require('./routes/postsRoutes'));
+app.use('/api/operators', require('./routes/operatorRoutes'));
 
 app.use(handleErrors);
 
