@@ -1,7 +1,13 @@
 const express = require('express');
 const operatorRouter = express.Router();
-const { registerOperator } = require('../controllers/operatorController.js');
+const {
+	registerOperator,
+	loginOperator,
+	getOperatorData,
+} = require('../controllers/operatorController.js');
 
 operatorRouter.post('/', registerOperator);
+operatorRouter.post('/login', loginOperator);
+operatorRouter.get('/me', getOperatorData);
 
 module.exports = operatorRouter;
