@@ -48,7 +48,22 @@ const registerOperator = asyncHandler(async (req, res) => {
 // DESC: Authenticate an operator
 // ENDPOINT: POST  /api/operators/login/
 // ACCESS: Public
-const loginOperator = asyncHandler(async (req, res) => {});
+const loginOperator = asyncHandler(async (req, res) => {
+	const { email, password } = req.body;
+
+	const operator = await Operator.findOne({ email });
+
+	if (operator && (await bcrypt.compare(password, operator.password))) {
+		res.json({
+			_id: operator.id,
+			name: operator.name,
+			email: operator.email,
+		});
+	} else {
+		res.status(400);
+		throw new Error("Credentials don't match our records");
+	}
+});
 
 // DESC: Get an operator's data
 // ENDPOINT: GET  /api/operators/me/
