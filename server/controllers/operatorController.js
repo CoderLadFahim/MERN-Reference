@@ -38,6 +38,7 @@ const registerOperator = asyncHandler(async (req, res) => {
 			_id: operator.id,
 			name: operator.name,
 			email: operator.email,
+			token: generateToken(operator._id),
 		});
 	} else {
 		res.status(400);
@@ -58,6 +59,7 @@ const loginOperator = asyncHandler(async (req, res) => {
 			_id: operator.id,
 			name: operator.name,
 			email: operator.email,
+			token: generateToken(operator._id),
 		});
 	} else {
 		res.status(400);
@@ -71,6 +73,13 @@ const loginOperator = asyncHandler(async (req, res) => {
 const getOperatorData = asyncHandler(async (req, res) => {
 	res.json({ message: 'Operator data' });
 });
+
+const generateToken = (id) => {
+	const jwtSecret = process.env.JWT_SECRET;
+	const token = jwt.sign({ id }, jwtSecret, { expiresIn: '25d' });
+
+	return token;
+};
 
 module.exports = {
 	registerOperator,

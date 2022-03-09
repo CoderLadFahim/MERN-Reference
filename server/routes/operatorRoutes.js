@@ -6,7 +6,7 @@ const {
 	getOperatorData,
 } = require('../controllers/operatorController.js');
 
-operatorRouter.post('/', registerOperator);
+operatorRouter.post('/register', registerOperator);
 operatorRouter.post('/login', loginOperator);
 operatorRouter.get('/me', getOperatorData);
 
