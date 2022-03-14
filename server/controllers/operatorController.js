@@ -69,7 +69,7 @@ const loginOperator = asyncHandler(async (req, res) => {
 
 // DESC: Get an operator's data
 // ENDPOINT: GET  /api/operators/me/
-// ACCESS: Public
+// ACCESS: Private
 const getOperatorData = asyncHandler(async (req, res) => {
 	res.json({ message: 'Operator data' });
 });
